@@ -9,8 +9,8 @@ defmodule CppLexer do
 
 
 #Defining regular expressions for different types of tokens with modules
-  @include_directive_regex ~r/^(#include)/
-  @class_regex ~r/^([A-Z][a-z]*)/
+  @include_directive_regex ~r/^(#include|#ifndef)/
+  @class_regex ~r/^([A-Z][a-z_]*)/
   @header_regex ~r/^(<[^>]+>|"[^"]+")/
   @define_regex ~r/^(#define)/
   @define_text_regex ~r/^([A-Z][A-Z0-9_]*)/
@@ -20,7 +20,7 @@ defmodule CppLexer do
   @std_regex ~r/^(std::)/
   @vector_class_regex ~r/^(vector|[A-Z][a-z]*)/
   @type_regex ~r/^(void|int|string|float|double|char|auto|bool|long|short|unsigned|signed|wchar_t|size_t)/
-  @keyword_regex ~r/^(for|while|do|if|else|switch|case|default|break|continue|return|new|delete|try|catch|throw|class|struct|template|namespace|using|typedef|virtual|friend|static|const|inline|explicit|operator|sizeof|private|public|protected)/
+  @keyword_regex ~r/^(for|while|do|if|else|switch|case|default|break|continue|return|new|delete|try|catch|throw|class|struct|template|namespace|using|typedef|virtual|friend|static|const|inline|explicit|operator|sizeof|private|public|protected|nullptr)/
   @function_regex ~r/^([a-zA-Z_][a-zA-Z0-9_]*)\s*\(/
   @identifier_regex ~r/^([a-zA-Z_][a-zA-Z0-9_]*)/
   @number_regex ~r/^(0[xX][0-9a-fA-F]+|0[bB][01]+|0[0-7]+|\d+\.\d+([eE][+-]?\d+)?|\d+)/
@@ -56,7 +56,9 @@ defmodule CppLexer do
 
   #Main function that receives the name of the input file
   def analyze(input_file) do
-    html_file = "SyntaxCPP.html" #Create the html file name
+
+    name = Path.rootname(input_file)
+    html_file = "#{name}.html" #Create the html file name
     css_file = "token_colors.css" #Create css file name
 
     content = File.read!(input_file) #Read the file
