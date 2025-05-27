@@ -1,0 +1,81 @@
+body {
+    font-family: 'Courier New', monospace;
+    line-height: 1.5;
+    margin: 20px;
+    background-color: #1e1e1e;
+    color: #ffffff;
+}
+
+pre {
+    background-color: #2d2d30;
+    padding: 20px;
+    border-radius: 5px;
+    border: 1px solid #3e3e42;
+    overflow-x: auto;
+}
+
+.comment {
+    color: #6a9955;
+    font-style: italic;
+}
+
+.keyword {
+    color: #569cd6;
+    font-weight: bold;
+}
+
+.template_keyword {
+    color: #c586c0;
+    font-weight: bold;
+}
+
+.string {
+    color: #ce9178;
+}
+
+.header {
+    color: #ce9178;
+}
+
+.character {
+    color: #d69d85;
+}
+
+.number {
+    color: #b5cea8;
+}
+
+.class {
+    color: #4ec9b0;
+    font-weight: bold;
+}
+
+.function {
+    color: #dcdcaa;
+}
+
+.identifier {
+    color: #9cdcfe;
+}
+
+.operator {
+    color: #d4d4d4;
+}
+
+.namespace {
+    color: #4ec9b0;
+}
+
+.scope {
+    color: #c586c0;
+}
+
+.punctuation {
+    color: #cccccc;
+}
+
+.preprocessor {
+    color: #9b9b9b;
+}
+
+
