@@ -26,10 +26,10 @@ After tokenization is complete:
 
 | File | Execution Time |
 |------|----------------|
-| **vertex.hpp** | 664 milliseconds |
-| **main.cpp** | 624 milliseconds |
-| **Graph.hpp** | 492 milliseconds |
-| **Edge.hpp** | 480 milliseconds |
+| **vertex.hpp** | 16.179 milliseconds |
+| **main.cpp** | 21.401 milliseconds |
+| **Graph.hpp** | 25.6 milliseconds |
+| **Edge.hpp** | 6.114 milliseconds |
 
 The program execution time is consistently under one second, which is acceptable for a program that processes over 100 lines of code and creates a new HTML file with complete syntax highlighting.
 
@@ -38,7 +38,7 @@ The program execution time is consistently under one second, which is acceptable
 ### Variables Definition
 - `n` = total number of characters in input file
 - `m` = number of lines  
-- `r` = number of regex patterns (17 patterns)
+- `r` = number of regex patterns
 
 ### Tokenization Phase
 - **Worst case**: O(r × n) -> when every character requires testing all regex patterns
@@ -55,8 +55,8 @@ The program execution time is consistently under one second, which is acceptable
 Using vertex.hpp as the test case:
 
 - **File size**: 2331 characters
-- **Execution time**: 664 ms
-- **Processing rate**: 3510 characters/second
+- **Execution time**: 16.179 ms
+- **Processing rate**: 144074 characters/second
 
 ### Validation
 The empirical results align with the theoretical O(n) complexity, showing linear scaling with input size. The consistent execution times across different files confirm the algorithm's predictable performance characteristics.
@@ -105,3 +105,6 @@ From a technical perspective, the implementation shows consistent performance de
 Regarding ethical implications, this technology improves developer productivity. The tool helps to identify what type of code element each token represents, helping to understand the code faster. Also, changing colors helps people who have color blindness by providing visual differentiation.
 
 The linear time complexity and sub-second execution times validate the algorithm's efficiency for practical use in development environments, making it valuable for both educational and professional contexts.
+
+## Reference
+- Expresiones regulares - JavaScript | MDN. (s. f.). MDN Web Docs. https://developer.mozilla.org/es/docs/Web/JavaScript/Guide/Regular_expressions 

@@ -1,4 +1,3 @@
-
 #Enrique Antonio Pires Rodríguez
 #A01424547
 #Lexical analysis of a C++ file and syntax highlighting in HTML.
@@ -47,16 +46,38 @@ defmodule CppLexer do
     {@identifier_regex, :identifier},
     {@space_regex, :space}
   ]
-  #Main function that receives the name of the input file
-  def analyze(input_file) do
+  #Main function that receives the name of the input file as a list of file's names or a string of a file's name
+  def analyze_each(input_file) do
+    if is_list(input_file) do
+      input_file
+      |> Enum.map(&process_each_file/1)
+    else
+      process_each_file(input_file)
+    end
+  end
+
+  def analyze_task(input_file) do
+    if is_list(input_file) do
+      input_file
+      |> Enum.map(&Task.async(fn ->
+        process_each_file(&1)
+      end))
+      |> Enum.map(&Task.await(&1))
+    else
+      process_each_file(input_file)
+    end
+  end
+
+  defp process_each_file(input_file) do
     name = Path.rootname(input_file)
-    html_file = "#{name}.html" #Create the html file name
+    html_file = "#{name}.html"
 
-    content = File.read!(input_file) #Read the file
-    tokens = tokenize(content) #Tokenize the file content
-    html = generate_html(tokens) #Send the tokens to the function that generates the HTML
+    html = input_file
+    |>File.read!()
+    |>tokenize()
+    |>generate_html()
 
-    File.write!(html_file, html) #Write the HTML to a file
+    File.write!(html_file, html)
   end
 
   #Function that take the files's content to tokenize as paragraphs
@@ -86,10 +107,10 @@ defmodule CppLexer do
     #if it's nil, we split it too but the length will be only the space, finishing when there is a word
     case result do
       {match, type} ->
-        {_, resto} = String.split_at(line, String.length(match))
+        {_, resto}  = String.split_at(line, String.length(match))
         tokenize_line(resto, [{match, type} | list])
       nil ->
-        {_, resto} = String.split_at(line, 1)
+        {_, resto}  = String.split_at(line, 1)
         tokenize_line(resto, list)
     end
   end
@@ -112,9 +133,7 @@ defmodule CppLexer do
   #We map the tokens and take as a paragraph
   defp generate_spans(tokens) do
     tokens
-    |>Enum.map(fn line->
-      generate_line_spans(line)
-    end)
+    |>Enum.map(&generate_line_spans/1)
     |>Enum.join("\n")
   end
   #We map the line and take only the match with its token
@@ -135,3 +154,46 @@ defmodule CppLexer do
     |> String.replace("\"", "&quot;")
   end
 end
+
+
+# The execution program
+# When you execute this file, the program will run this for loop to measure execution times from the cpplexer
+
+IO.puts("Sequentially apply")
+#Variable that stores a list of executions times for sequential proccessing
+times = for _ <- 1..10 do
+  # Variable that stores the execution time from the function analyze_each
+  time = :timer.tc(fn -> CppLexer.analyze_each(["BankSystem.hpp", "EmployeeManager.cpp", "Library.hpp", "LinkedList.hpp", "OnlineStore.hpp", "TaskManager.hpp"]) end) |> elem(0)
+  #Convert microseconds to seconds
+  time = time / 1000000
+  # Return the execution time to store it in the list
+  time
+end
+
+#Sum the list after finishing the for loop
+total = Enum.sum(times)
+#Calculate the average
+average1 = total / 10
+#Print average
+IO.puts("Average: #{average1} seconds")
+
+IO.puts("Modern multi-core")
+# Variable that stores a list of execution times for parallel processing
+times = for _ <- 1..10 do
+  # Variable that stores the execution time from the function analyze_task
+  time = :timer.tc(fn -> CppLexer.analyze_task(["BankSystem.hpp", "EmployeeManager.cpp", "Library.hpp", "LinkedList.hpp", "OnlineStore.hpp", "TaskManager.hpp"]) end) |> elem(0)
+  # Convert microseconds to seconds
+  time = time / 1000000
+  # Return the execution time to store it in the list
+  time
+end
+
+# Sum the list after finishing the for loop
+total = Enum.sum(times)
+# Calculate the average
+average2 = total / 10
+IO.puts("Average: #{average2} seconds")
+
+# Calculate the speed improvement
+speed_up = average1/ average2
+IO.puts("Speed_up: #{speed_up} faster")
