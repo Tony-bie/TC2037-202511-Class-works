@@ -13,7 +13,7 @@ defmodule CppLexer do
   @string_regex ~r/^"[^"]*"/
   @char_regex ~r/^'[^']*'/
   @number_regex ~r/^(\d+\.\d+|\d+)/
-  @preprocessor_regex ~r/^(#include| #define | #ifndef)/
+  @preprocessor_regex ~r/^(#include|#define|#ifndef)/
   @header_regex ~r/^<\w+>/
   @template_regex ~r/^template/
   @keyword_regex ~r/^(class|int|void|bool|for|while|if|else|return|new|delete|public|private|protected|static|const|virtual|using|auto)/
@@ -24,7 +24,7 @@ defmodule CppLexer do
   @identifier_regex ~r/^[a-zA-Z_]\w*/
   @operator_regex ~r/^(\+\+|--|->|<<|>>|<=|>=|==|!=|&&|\|\||[+\-*\/%<>=!&|^~])/
   @punctuation_regex ~r/^[(){}\[\];:,.<>]/
-  @space_regex ~r/^\s+/
+  @space_regex ~r/^[ \t]+/
 
 #Variables added to a module list with their corresponding token types,
 #next to it are your CSS tags, each token type is assigned a different color.

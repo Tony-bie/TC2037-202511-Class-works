@@ -12,10 +12,10 @@ defmodule CppLexer do
   @string_regex ~r/^"[^"]*"/
   @char_regex ~r/^'[^']*'/
   @number_regex ~r/^(\d+\.\d+|\d+)/
-  @preprocessor_regex ~r/^(#include| #define | #ifndef)/
+  @preprocessor_regex ~r/^(#include|#define|#ifndef)/
   @header_regex ~r/^<\w+>/
   @template_regex ~r/^template/
-  @keyword_regex ~r/^(class|int|void|bool|for|while|if|else|return|new|delete|public|private|protected|static|const|virtual|using|auto)/
+  @keyword_regex ~r/^(class|int|void|bool|for|while|if|else|return|new|delete|public|private|protected|static|const|virtual|using|auto|double)/
   @std_regex ~r/^std::/
   @scope_regex ~r/^::/
   @class_name_regex ~r/^[A-Z]\w*/
@@ -23,7 +23,7 @@ defmodule CppLexer do
   @identifier_regex ~r/^[a-zA-Z_]\w*/
   @operator_regex ~r/^(\+\+|--|->|<<|>>|<=|>=|==|!=|&&|\|\||[+\-*\/%<>=!&|^~])/
   @punctuation_regex ~r/^[(){}\[\];:,.<>]/
-  @space_regex ~r/^\s+/
+  @space_regex ~r/^[ \t]+/
 
 #Variables added to a module list with their corresponding token types,
 #next to it are your CSS tags, each token type is assigned a different color.
@@ -181,7 +181,7 @@ IO.puts("Modern multi-core")
 # Variable that stores a list of execution times for parallel processing
 times = for _ <- 1..10 do
   # Variable that stores the execution time from the function analyze_task
-  {time, _} = :timer.tc(fn -> CppLexer.analyze_task(["BankSystem.hpp", "EmployeeManager.cpp", "Library.hpp", "LinkedList.hpp", "OnlineStore.hpp", "TaskManager.hpp"]) end) 
+  {time, _} = :timer.tc(fn -> CppLexer.analyze_task(["BankSystem.hpp", "EmployeeManager.cpp", "Library.hpp", "LinkedList.hpp", "OnlineStore.hpp", "TaskManager.hpp"]) end)
   # Convert microseconds to seconds
   time = time / 1000000
   # Return the execution time to store it in the list
