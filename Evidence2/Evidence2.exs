@@ -163,7 +163,7 @@ IO.puts("Sequentially apply")
 #Variable that stores a list of executions times for sequential proccessing
 times = for _ <- 1..10 do
   # Variable that stores the execution time from the function analyze_each
-  time = :timer.tc(fn -> CppLexer.analyze_each(["BankSystem.hpp", "EmployeeManager.cpp", "Library.hpp", "LinkedList.hpp", "OnlineStore.hpp", "TaskManager.hpp"]) end) |> elem(0)
+  {time, _} = :timer.tc(fn -> CppLexer.analyze_each(["BankSystem.hpp", "EmployeeManager.cpp", "Library.hpp", "LinkedList.hpp", "OnlineStore.hpp", "TaskManager.hpp"]) end)
   #Convert microseconds to seconds
   time = time / 1000000
   # Return the execution time to store it in the list
@@ -181,7 +181,7 @@ IO.puts("Modern multi-core")
 # Variable that stores a list of execution times for parallel processing
 times = for _ <- 1..10 do
   # Variable that stores the execution time from the function analyze_task
-  time = :timer.tc(fn -> CppLexer.analyze_task(["BankSystem.hpp", "EmployeeManager.cpp", "Library.hpp", "LinkedList.hpp", "OnlineStore.hpp", "TaskManager.hpp"]) end) |> elem(0)
+  {time, _} = :timer.tc(fn -> CppLexer.analyze_task(["BankSystem.hpp", "EmployeeManager.cpp", "Library.hpp", "LinkedList.hpp", "OnlineStore.hpp", "TaskManager.hpp"]) end) 
   # Convert microseconds to seconds
   time = time / 1000000
   # Return the execution time to store it in the list
