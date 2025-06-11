@@ -107,4 +107,5 @@ Regarding ethical implications, this technology improves developer productivity.
 The linear time complexity and sub-second execution times validate the algorithm's efficiency for practical use in development environments, making it valuable for both educational and professional contexts.
 
 ## Reference
+- Based on material from the Parallel Programming course, Prof. Gilberto Echeverría
 - Expresiones regulares - JavaScript | MDN. (s. f.). MDN Web Docs. https://developer.mozilla.org/es/docs/Web/JavaScript/Guide/Regular_expressions 
